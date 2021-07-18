@@ -1,4 +1,4 @@
-var Employee = require( 'Employee.js' );
+var Employee = require( './Employee' );
 
 class Manager extends Employee {
     constructor( officeNumber ) {
@@ -8,3 +8,5 @@ class Manager extends Employee {
         return 'Manager';
     }
 }
+
+module.exports = Manager;
