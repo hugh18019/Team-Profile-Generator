@@ -7,7 +7,7 @@ class Engineer extends Employee {
         this.id = employee_id,
         this.email = email_address,
         this.officeNumber = office_number,
-        this.github = github
+        this.GitHub = github
     }
     getGithub() {
         return this.github;

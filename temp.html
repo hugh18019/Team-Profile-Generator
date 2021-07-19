@@ -1,10 +1,4 @@
 
-
-function generateHTML( membersArr ) {
-
-
-    var infoSoFar = 
-    `
     <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -26,56 +20,47 @@ function generateHTML( membersArr ) {
         
             <div class="cards-container d-flex justify-content-center align-items-center flex-row flex-wrap">
                 <div class="row d-flex flex-row flex-wrap justify-content-center col-9 cards-row">
-    `;
-
-    for( let each of membersArr ) {
-        var name = each.name;
-        var email = each.email;
-        var id = each.id;
-        var role = each.getRole();
-        var specialAttr = generateHTMLUtil( each );
-
-        infoSoFar +=
-        ` 
+     
         <div class="card" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title"> ${name} </h5>
-                <h6 class="card-subtitle mb-2 text-muted"> ${role} </h6>
-                <p class="card-text">ID: ${id} </p>
+                <h5 class="card-title"> tom </h5>
+                <h6 class="card-subtitle mb-2 text-muted"> Manager </h6>
+                <p class="card-text">ID: 12 </p>
                 <p class="card-text">
-                    <a href="mailto:${email}"> ${email} </a> 
+                    <a href="mailto:12"> 12 </a> 
                 </p>
-                <p class="card-text"> ${specialAttr} </p>
+                <p class="card-text"> Office number: undefined  </p>
             </div>
         </div>
-        `
-    }
-    
-    infoSoFar += 
-    `
+         
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title"> io </h5>
+                <h6 class="card-subtitle mb-2 text-muted"> Engineer </h6>
+                <p class="card-text">ID: 13 </p>
+                <p class="card-text">
+                    <a href="mailto:13"> 13 </a> 
+                </p>
+                <p class="card-text"> GitHub: undefined  </p>
+            </div>
+        </div>
+         
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title"> op </h5>
+                <h6 class="card-subtitle mb-2 text-muted"> Intern </h6>
+                <p class="card-text">ID: 14 </p>
+                <p class="card-text">
+                    <a href="mailto:14"> 14 </a> 
+                </p>
+                <p class="card-text"> School: 14  </p>
+            </div>
+        </div>
+        
         </div>
     </div>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script type="text/javascript" src="Index.js"></script>
     </body>
     </html>
-    `
     
-    return infoSoFar;
-}
-
-
-function generateHTMLUtil( data ) {
-    if( data.getRole() == 'Manager') {
-        return `Office number: ${data.office_number} `;
-    }
-    if( data.getRole() == 'Engineer') {
-        return `GitHub: ${data.GitHub} `;
-    }
-    if( data.getRole() == 'Intern' ) {
-        return `School: ${data.school} `;
-    }
-}
-
-
-module.exports = generateHTML;

@@ -6,7 +6,7 @@ class Manager extends Employee {
         this.name = name,
         this.id = employee_id,
         this.email = email_address,
-        this.officeNumber = office_number
+        this.office_number = office_number
     }
     getRole() {
         return 'Manager';

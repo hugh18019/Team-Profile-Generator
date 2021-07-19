@@ -34,7 +34,7 @@ function promptForManager() {
         .then ( (answer) => {
             const { name, employee_id, email_address, office_number } = answer;
             var managerObj = new Manager( name, employee_id, email_address, office_number );
-            membersObj.push( managerObj );
+            membersArr.push( managerObj );
             resolve( answer );
         })
     })
@@ -76,7 +76,7 @@ function promptForEngineer() {
          .then ( (answer) => {
              const { name, employee_id, email_address, office_number, GitHub_username } = answer;
              var engineerObj = new Engineer( name, employee_id, email_address, office_number, GitHub_username );
-             membersObj.push( engineerObj );
+             membersArr.push( engineerObj );
              resolve( 'engineer' );
          })
     }) 
@@ -121,7 +121,7 @@ function promptForIntern () {
         .then ( ( answer ) => {
             const { name, employee_id, email_address, office_number, school } = answer;
             var internObj = new Intern( name, employee_id, email_address, office_number, school );
-            membersObj.push( internObj );
+            membersArr.push( internObj );
             resolve( 'intern' );
         })
     })
@@ -148,21 +148,10 @@ function promptForMoreMember() {
 
 
 
-var membersObj = [];
+var membersArr = [];
 
 
-
-
-function writeToFile() {
-    var HTMLData = generateHTMLFn( testData );
-    console.log( HTMLData );
-
-}
-
-// writeToFile();
-
-
-async function promptUser() {
+async function init() {
     await promptForManager();
 
     var done = false;
@@ -180,8 +169,34 @@ async function promptUser() {
         }
     
     }
-    console.log( membersObj );
+    // console.log( membersArr );
+    writeToFile();
     
 }
 
-promptUser();
+
+
+function clearFile() {
+    fs.write('./temp.html', '', function(){} );
+}
+
+
+function writeToFile() {
+
+    clearFile();
+    var HTMLData = generateHTMLFn( membersArr );
+    console.log( HTMLData );
+
+    fs.writeFile( "./temp.html", `${HTMLData}`, err => {
+        if( err ) {
+            console.error( err );
+            return;
+        }
+    })
+}
+
+
+init();
+
+
+
