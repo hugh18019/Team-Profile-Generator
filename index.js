@@ -177,7 +177,7 @@ async function init() {
 
 
 function clearFile() {
-    fs.write('./temp.html', '', function(){} );
+    fs.writeFile('./temp.html', '', function(){} );
 }
 
 

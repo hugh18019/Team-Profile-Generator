@@ -43,7 +43,7 @@ function generateHTML( membersArr ) {
                 <h6 class="card-subtitle mb-2 text-muted"> ${role} </h6>
                 <p class="card-text">ID: ${id} </p>
                 <p class="card-text">
-                    <a href="mailto:${email}"> ${email} </a> 
+                    <span>Email: </span><a href="mailto:${email}"> ${email} </a> 
                 </p>
                 <p class="card-text"> ${specialAttr} </p>
             </div>
