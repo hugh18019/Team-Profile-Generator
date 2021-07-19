@@ -4,126 +4,184 @@ let Manager = require( './Manager' );
 let Employee = require( './Employee' );
 let Engineer = require( './Engineer' );
 let Intern = require( './Intern' );
+var generateHTMLFn = require( './generateHTML' );
+const { exit } = require('process');
 
 function promptForManager() {
-    inquirer.prompt ( [
-    {
-        name: 'name',
-        message: "Enter the manager's name",
-        inputType: 'input'
-    },
-    {
-        name: 'employee_id',
-        message: "Enter the manager's employee ID",
-        inputType: 'input'
-    },
-    {
-        name: 'email_address',
-        message: "Enter the manager's email address",
-        inputType: 'input'
-    },
-    {
-        name: 'office_number',
-        message: "Enter the manager's office number",
-        inputType: 'input'
-    },
-    ] )
-    .then ( (answer) => {
-        console.log( answer );
-        const { name, employee_id, email_address, office_number } = answer;
-        // var managerObj = Manager( answer)
-        var managerObj = new Manager( name, employee_id, email_address, office_number );
-        console.log( managerObj );
+    return new Promise( (resolve, reject) => {
+        inquirer.prompt ( [
+            {
+                name: 'name',
+                message: "Enter the manager's name",
+                inputType: 'input'
+            },
+            {
+                name: 'employee_id',
+                message: "Enter the manager's employee ID",
+                inputType: 'input'
+            },
+            {
+                name: 'email_address',
+                message: "Enter the manager's email address",
+                inputType: 'input'
+            },
+            {
+                name: 'office_number',
+                message: "Enter the manager's office number",
+                inputType: 'input'
+            },
+        ] )
+        .then ( (answer) => {
+            const { name, employee_id, email_address, office_number } = answer;
+            var managerObj = new Manager( name, employee_id, email_address, office_number );
+            membersObj.push( managerObj );
+            resolve( answer );
+        })
     })
+    
+}
+
+
+
+
+function promptForEngineer() {
+    return new Promise( (resolve, reject) => {
+        inquirer.prompt ( [
+             {
+                 name: 'name',
+                 message: "Enter the engineer's name",
+                 inputType: 'input'
+             },
+             {
+                 name: 'employee_id',
+                 message: "Enter the engineer's employee ID",
+                 inputType: 'input'
+             },
+             {
+                 name: 'email_address',
+                 message: "Enter the engineer's email address",
+                 inputType: 'input'
+             },
+             {
+                 name: 'office_number',
+                 message: "Enter the engineer's office number",
+                 inputType: 'input'
+             },
+             {
+                 name: 'GitHub_username',
+                 message: "Enter the engineer's GitHub username",
+                 inputType: 'input'
+             }
+         ] )
+         .then ( (answer) => {
+             const { name, employee_id, email_address, office_number, GitHub_username } = answer;
+             var engineerObj = new Engineer( name, employee_id, email_address, office_number, GitHub_username );
+             membersObj.push( engineerObj );
+             resolve( 'engineer' );
+         })
+    }) 
+ }
+
+
+
+function promptForIntern () {
+    return new Promise( (resolve, reject ) => {
+        inquirer.prompt ( [
+            {
+                name: 'name',
+                message: "Enter the intern's name",
+                inputType: 'input'
+            },
+            {
+                name: 'employee_id',
+                message: "Enter the intern's employee ID",
+                inputType: 'input'
+            },
+            {
+                name: 'email_address',
+                message: "Enter the intern's email address",
+                inputType: 'input'
+            },
+            {
+                name: 'office_number',
+                message: "Enter the intern's office number",
+                inputType: 'input'
+            },
+            {
+                name: 'GitHub_username',
+                message: "Enter the intern's GitHub username",
+                inputType: 'input'
+            },
+            {
+                name: 'school',
+                message: "Enter the intern's school",
+                inputType: 'input'
+            }
+        ] )
+        .then ( ( answer ) => {
+            const { name, employee_id, email_address, office_number, school } = answer;
+            var internObj = new Intern( name, employee_id, email_address, office_number, school );
+            membersObj.push( internObj );
+            resolve( 'intern' );
+        })
+    })
+    
 }
 
 
 function promptForMoreMember() {
-    inquirer.prompt ([
-        {
-            name: 'newMemberType',
-            message: 'Choose the type of new member do you want to add, or "none" to finish building your team.',
-            inputType: 'list',
-            choices: [ 'engineer', 'intern', 'none'],
-            default: 'none'
-        }
-    ])
-    .then ( (answer) => {
-        console.log( answer );
-        // { newMemberType: 'Engineer' }
+    return new Promise( (resolve, reject) => {
+        inquirer.prompt([
+            {
+                type: 'list',
+                name: 'newMemberType',
+                message: 'Choose the type of the new member or none to finish building the team?',
+                choices: ['engineer', 'intern', 'none'],
+            }
+        ])
+        .then( (answer) => {
+            resolve( answer );
+        })
     })
 }
 
 
-function promptForEngineer() {
-    inquirer.prompt ( [
-        {
-            name: 'name',
-            message: "Enter the engineer's name",
-            inputType: 'input'
-        },
-        {
-            name: 'employee_id',
-            message: "Enter the engineer's employee ID",
-            inputType: 'input'
-        },
-        {
-            name: 'email_address',
-            message: "Enter the engineer's email address",
-            inputType: 'input'
-        },
-        {
-            name: 'office_number',
-            message: "Enter the engineer's office number",
-            inputType: 'input'
-        },
-        {
-            name: 'GitHub_username',
-            message: "Enter the engineer's GitHub username",
-            inputType: 'input'
-        }
-    ] )
-    .then ( (answer) => {
-        const { name, employee_id, email_address, office_number, github } = answer;
-        var engineerObj = new Engineer( name, employee_id, email_address, office_number, github );
-    })
+
+
+var membersObj = [];
+
+
+
+
+function writeToFile() {
+    var HTMLData = generateHTMLFn( testData );
+    console.log( HTMLData );
+
 }
 
-function promptForIntern () {
-    inquirer.prompt ( [
-        {
-            name: 'name',
-            message: "Enter the intern's name",
-            inputType: 'input'
-        },
-        {
-            name: 'employee_id',
-            message: "Enter the intern's employee ID",
-            inputType: 'input'
-        },
-        {
-            name: 'email_address',
-            message: "Enter the intern's email address",
-            inputType: 'input'
-        },
-        {
-            name: 'office_number',
-            message: "Enter the intern's office number",
-            inputType: 'input'
-        },
-        {
-            name: 'GitHub_username',
-            message: "Enter the intern's GitHub username",
-            inputType: 'input'
-        },
-        {
-            name: 'school',
-            message: "Enter the intern's school",
-            inputType: 'input'
+// writeToFile();
+
+
+async function promptUser() {
+    await promptForManager();
+
+    var done = false;
+    while( !done ) {
+        const answer = await promptForMoreMember();
+        // console.log( answer );
+        if( answer.newMemberType == 'engineer' ) {
+            await promptForEngineer();
         }
-    ] )
-    .then ( ( answer ) => {
-        const { name, employee_id, email_address, office_number, school } = answer;
-        var internObj = new Intern( name, employee_id, email_address, office_number, school );
-    })
+        else if( answer.newMemberType == 'intern' ) {
+            await promptForIntern();
+        }
+        else {
+            done = true;
+        }
+    
+    }
+    console.log( membersObj );
+    
 }
+
+promptUser();
