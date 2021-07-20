@@ -1,5 +1,11 @@
 class Employee {
     constructor( name, id, email ) {
+        if (typeof name !== 'string' || !name.trim().length
+             || typeof id !== 'string' || !id.trim().length
+             || typeof email !== 'string' || !email.trim().length) {
+            throw new Error("Expected parameters 'name', 'id', 'email' to be non empty strings");
+        }
+
         this.name = name;
         this.id = id;
         this.email = email;
