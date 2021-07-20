@@ -18,6 +18,7 @@ describe('Engineer', () => {
             expect(engineerObj.id).toEqual(id);
             expect(engineerObj.email).toEqual(email);
             expect(engineerObj.GitHub).toEqual(GitHub);
+
         });
         
         // Exception test

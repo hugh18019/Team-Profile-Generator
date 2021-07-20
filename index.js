@@ -98,11 +98,6 @@ function promptForIntern () {
                 inputType: 'input'
             },
             {
-                name: 'GitHub_username',
-                message: "Enter the intern's GitHub username",
-                inputType: 'input'
-            },
-            {
                 name: 'school',
                 message: "Enter the intern's school",
                 inputType: 'input'
