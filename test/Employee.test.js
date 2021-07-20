@@ -1,7 +1,6 @@
-const Employee = require('../Employee');
+const Employee = require('../lib/Employee');
 
 describe('Employee', () => {
-
     describe('Initialization', () => {
         // Positive test
         it("should create an Employee object with the 'name', 'id', 'email' properties set to the corresponding 'name', 'id', 'email' arguments provided when called with the 'new' keyword", () => {
