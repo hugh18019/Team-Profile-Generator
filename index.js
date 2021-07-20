@@ -1,10 +1,10 @@
 const inquirer = require( 'inquirer' );
 const fs = require( 'fs' );
-let Manager = require( './Manager' );
-let Employee = require( './Employee' );
-let Engineer = require( './Engineer' );
-let Intern = require( './Intern' );
-var generateHTMLFn = require( './generateHTML' );
+let Employee = require( './lib/Employee' );
+let Manager = require( './lib/Manager' );
+let Engineer = require( './lib/Engineer' );
+let Intern = require( './lib/Intern' );
+var generateHTMLFn = require( './src/generateHTML' );
 const { exit } = require('process');
 
 function promptForManager() {
@@ -63,19 +63,14 @@ function promptForEngineer() {
                  inputType: 'input'
              },
              {
-                 name: 'office_number',
-                 message: "Enter the engineer's office number",
-                 inputType: 'input'
-             },
-             {
                  name: 'GitHub_username',
                  message: "Enter the engineer's GitHub username",
                  inputType: 'input'
              }
          ] )
          .then ( (answer) => {
-             const { name, employee_id, email_address, office_number, GitHub_username } = answer;
-             var engineerObj = new Engineer( name, employee_id, email_address, office_number, GitHub_username );
+             const { name, employee_id, email_address, GitHub_username } = answer;
+             var engineerObj = new Engineer( name, employee_id, email_address, GitHub_username );
              membersArr.push( engineerObj );
              resolve( 'engineer' );
          })
@@ -103,11 +98,6 @@ function promptForIntern () {
                 inputType: 'input'
             },
             {
-                name: 'office_number',
-                message: "Enter the intern's office number",
-                inputType: 'input'
-            },
-            {
                 name: 'GitHub_username',
                 message: "Enter the intern's GitHub username",
                 inputType: 'input'
@@ -119,8 +109,8 @@ function promptForIntern () {
             }
         ] )
         .then ( ( answer ) => {
-            const { name, employee_id, email_address, office_number, school } = answer;
-            var internObj = new Intern( name, employee_id, email_address, office_number, school );
+            const { name, employee_id, email_address, school } = answer;
+            var internObj = new Intern( name, employee_id, email_address, school );
             membersArr.push( internObj );
             resolve( 'intern' );
         })
@@ -177,7 +167,7 @@ async function init() {
 
 
 function clearFile() {
-    fs.writeFile('./temp.html', '', function(){} );
+    fs.writeFile('./dist/temp.html', '', function(){} );
 }
 
 
@@ -187,7 +177,7 @@ function writeToFile() {
     var HTMLData = generateHTMLFn( membersArr );
     console.log( HTMLData );
 
-    fs.writeFile( "./temp.html", `${HTMLData}`, err => {
+    fs.writeFile( "./dist/temp.html", `${HTMLData}`, err => {
         if( err ) {
             console.error( err );
             return;
