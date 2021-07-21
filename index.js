@@ -7,6 +7,9 @@ let Intern = require( './lib/Intern' );
 var generateHTMLFn = require( './src/generateHTML' );
 const { exit } = require('process');
 
+
+// Using the inquirer package to prompt the user to add a new manager and enter the appropriate information
+// The entered information is pushed onto the membersArr.
 function promptForManager() {
     return new Promise( (resolve, reject) => {
         inquirer.prompt ( [
@@ -32,9 +35,6 @@ function promptForManager() {
             },
         ] )
         .then ( (answer) => {
-            const { name, employee_id, email_address, office_number } = answer;
-            var managerObj = new Manager( name, employee_id, email_address, office_number );
-            membersArr.push( managerObj );
             resolve( answer );
         })
     })
@@ -69,10 +69,7 @@ function promptForEngineer() {
              }
          ] )
          .then ( (answer) => {
-             const { name, employee_id, email_address, GitHub_username } = answer;
-             var engineerObj = new Engineer( name, employee_id, email_address, GitHub_username );
-             membersArr.push( engineerObj );
-             resolve( 'engineer' );
+             resolve( answer );
          })
     }) 
  }
@@ -104,10 +101,7 @@ function promptForIntern () {
             }
         ] )
         .then ( ( answer ) => {
-            const { name, employee_id, email_address, school } = answer;
-            var internObj = new Intern( name, employee_id, email_address, school );
-            membersArr.push( internObj );
-            resolve( 'intern' );
+            resolve( answer );
         })
     })
     
@@ -137,32 +131,51 @@ var membersArr = [];
 
 
 async function init() {
-    await promptForManager();
-
+    const answer = await promptForManager();
+    storeManagerInfo(answer);
     var done = false;
     while( !done ) {
         const answer = await promptForMoreMember();
-        // console.log( answer );
+
         if( answer.newMemberType == 'engineer' ) {
-            await promptForEngineer();
+            const answer = await promptForEngineer();
+            storeEngineerInfo(answer);
         }
         else if( answer.newMemberType == 'intern' ) {
-            await promptForIntern();
+            const answer = await promptForIntern();
+            storeInternInfo(answer);
         }
         else {
             done = true;
         }
     
     }
-    // console.log( membersArr );
-    writeToFile();
-    
+    writeToFile();    
+}
+
+
+function storeManagerInfo ( answer ) {
+    const { name, employee_id, email_address, office_number } = answer;
+    var managerObj = new Manager( name, employee_id, email_address, office_number );
+    membersArr.push( managerObj );
+}
+
+function storeEngineerInfo ( answer ) {
+    const { name, employee_id, email_address, GitHub_username } = answer;
+    var engineerObj = new Engineer( name, employee_id, email_address, GitHub_username );
+    membersArr.push( engineerObj );
+}
+
+function storeInternInfo ( answer ) {
+    const { name, employee_id, email_address, school } = answer;
+    var internObj = new Intern( name, employee_id, email_address, school );
+    membersArr.push( internObj );
 }
 
 
 
 function clearFile() {
-    fs.writeFile('./dist/temp.html', '', function(){} );
+    fs.writeFile('./dist/index.html', '', function(){} );
 }
 
 
@@ -172,7 +185,7 @@ function writeToFile() {
     var HTMLData = generateHTMLFn( membersArr );
     console.log( HTMLData );
 
-    fs.writeFile( "./dist/temp.html", `${HTMLData}`, err => {
+    fs.writeFile( "./dist/index.html", `${HTMLData}`, err => {
         if( err ) {
             console.error( err );
             return;
