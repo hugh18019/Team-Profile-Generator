@@ -1,7 +1,9 @@
 
-
+// Generates HTML code
+// For each member of the team, generates the appropriate HTML code and appends it to infoSoFar varible
+// Also calls the generateHTMLUtil function to generate HTML code specific to each team member
+// Returns the infoSoFar variable which contains the complete HTML code for the team profile
 function generateHTML( membersArr ) {
-
 
     var infoSoFar = 
     `
@@ -64,7 +66,10 @@ function generateHTML( membersArr ) {
     return infoSoFar;
 }
 
-
+// Accepts a team member object and based on the role of the member, return the data unique to that member\
+// For managers, it's the office number
+// For engineers, it's the GitHub username
+// For interns, it's the school
 function generateHTMLUtil( data ) {
     if( data.getRole() == 'Manager') {
         return `Office number: ${data.office_number} `;

@@ -9,7 +9,7 @@ const { exit } = require('process');
 
 
 // Using the inquirer package to prompt the user to add a new manager and enter the appropriate information
-// The entered information is pushed onto the membersArr.
+// The entered information is returned
 function promptForManager() {
     return new Promise( (resolve, reject) => {
         inquirer.prompt ( [
@@ -43,7 +43,8 @@ function promptForManager() {
 
 
 
-
+// Using the inquirer package to prompt the user to add a new engineer and enter the appropriate information
+// The entered information is returned
 function promptForEngineer() {
     return new Promise( (resolve, reject) => {
         inquirer.prompt ( [
@@ -75,7 +76,8 @@ function promptForEngineer() {
  }
 
 
-
+// Using the inquirer package to prompt the user to add a new intern and enter the appropriate information
+// The entered information is returned
 function promptForIntern () {
     return new Promise( (resolve, reject ) => {
         inquirer.prompt ( [
@@ -107,7 +109,8 @@ function promptForIntern () {
     
 }
 
-
+// Using the inquirer package to prompt the user to add a new employee of the desired type, or to finish adding team members
+// The entered information is returned
 function promptForMoreMember() {
     return new Promise( (resolve, reject) => {
         inquirer.prompt([
@@ -126,10 +129,15 @@ function promptForMoreMember() {
 
 
 
-
+// The array to hold all team member objects
+// This array is later used to generate HTML data for each member
 var membersArr = [];
 
 
+// This function is the main control for adding new members.
+// It first prompts the user to add a manager.
+// It then uses a while loop to keep prompting to add new engineers and interns until the user chooses 'none'
+// It then calls the writeToFile function to write the user input data to an html file
 async function init() {
     const answer = await promptForManager();
     storeManagerInfo(answer);
@@ -153,19 +161,24 @@ async function init() {
     writeToFile();    
 }
 
-
+// Creates an object for a manager based on user input
+// Pushes that object onto the membersArr
 function storeManagerInfo ( answer ) {
     const { name, employee_id, email_address, office_number } = answer;
     var managerObj = new Manager( name, employee_id, email_address, office_number );
     membersArr.push( managerObj );
 }
 
+// Creates an object for an engineer based on user input
+// Pushes that object onto the membersArr
 function storeEngineerInfo ( answer ) {
     const { name, employee_id, email_address, GitHub_username } = answer;
     var engineerObj = new Engineer( name, employee_id, email_address, GitHub_username );
     membersArr.push( engineerObj );
 }
 
+// Creates an object for an intern based on user input
+// Pushes that object onto the membersArr
 function storeInternInfo ( answer ) {
     const { name, employee_id, email_address, school } = answer;
     var internObj = new Intern( name, employee_id, email_address, school );
@@ -173,17 +186,18 @@ function storeInternInfo ( answer ) {
 }
 
 
-
+// Clears everything inside index.html before writing to it
 function clearFile() {
     fs.writeFile('./dist/index.html', '', function(){} );
 }
 
-
+// Calls clearFile to clear out index.html
+// Passes the membersArr to generateHTMLFn to generate code to be written to index.html
+// Writes the generated HTML code to index.html
 function writeToFile() {
 
     clearFile();
     var HTMLData = generateHTMLFn( membersArr );
-    console.log( HTMLData );
 
     fs.writeFile( "./dist/index.html", `${HTMLData}`, err => {
         if( err ) {
@@ -193,7 +207,7 @@ function writeToFile() {
     })
 }
 
-
+// Calls the init function to start the application
 init();
 
 
