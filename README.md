@@ -28,6 +28,14 @@ GitHub Profile: https://github.com/hugh18019
 
 Run the command `npm start test` to run the tests.
 
+## Links
+
+Walkthrough demo:
+https://drive.google.com/file/d/1LLNx4vpmmJ_RPHfttFHqlFwheii4fSfa/view?usp=sharing
+
+Tests demo:
+https://drive.google.com/file/d/1na3RVIJfIjaXFENIJMmh_X20XWvAPuAp/view?usp=sharing
+
 ## License
 
 Licensed under the [MIT License](LICENSE).
